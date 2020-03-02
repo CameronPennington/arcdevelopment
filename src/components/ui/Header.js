@@ -84,6 +84,12 @@ export default function Header(props) {
 		setOpen(true);
 	};
 
+	const handleMenuItemClick = (e, i) => {
+		setAnchorEl(null);
+		setOpen(false);
+		setSelectedIndex(i);
+	};
+
 	const handleClose = e => {
 		setAnchorEl(null);
 		setOpen(false);
@@ -187,50 +193,22 @@ export default function Header(props) {
 							classes={{ paper: classes.menu }}
 							elevation={0}
 						>
-							<MenuItem
-								onClick={() => {
-									handleClose();
-									setValue(1);
-								}}
-								component={Link}
-								to="/services"
-								classes={{ root: classes.menuItem }}
-							>
-								Services
-							</MenuItem>
-							<MenuItem
-								onClick={() => {
-									handleClose();
-									setValue(1);
-								}}
-								component={Link}
-								to="/customsoftware"
-								classes={{ root: classes.menuItem }}
-							>
-								Custom Sofware
-							</MenuItem>
-							<MenuItem
-								onClick={() => {
-									handleClose();
-									setValue(1);
-								}}
-								component={Link}
-								to="/mobileapps"
-								classes={{ root: classes.menuItem }}
-							>
-								Mobile App Development
-							</MenuItem>
-							<MenuItem
-								onClick={() => {
-									handleClose();
-									setValue(1);
-								}}
-								component={Link}
-								to="/websites"
-								classes={{ root: classes.menuItem }}
-							>
-								Website Development
-							</MenuItem>
+							{menuOptions.map((option, i) => (
+								<MenuItem
+									key={option}
+									component={Link}
+									to={option.link}
+									classes={{ root: classes.menuItem }}
+									onClick={event => {
+										handleMenuItemClick(event, i);
+										setValue(1);
+										handleClose();
+									}}
+									selected={i === selectedIndex && value === 1}
+								>
+									{option.name}
+								</MenuItem>
+							))}
 						</Menu>
 					</Toolbar>
 				</AppBar>
